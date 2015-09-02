@@ -9,7 +9,7 @@ Timbre implementation for [ring-logger](https://github.com/nberger/ring-logger)
 In your `project.clj`, add the following dependencies:
 
 ```clojure
-    [ring-logger-timbre "0.7.0-SNAPSHOT"]
+    [ring-logger-timbre "0.7.0"]
 ```
 
 Add the middleware to your stack, using the timbre implementation. It's similar to
