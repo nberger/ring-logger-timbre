@@ -1,6 +1,6 @@
 # ring-logger-timbre [![Circle CI](https://circleci.com/gh/nberger/ring-logger-timbre.svg?style=svg)](https://circleci.com/gh/nberger/ring-logger-timbre)
 
-Timbre implementation for [ring-logger](https://github.com/nberger/ring-logger)
+[Timbre](https://github.com/ptaoussanis/timbre) implementation for [ring-logger](https://github.com/nberger/ring-logger)
 
 [![Clojars Project](http://clojars.org/ring-logger-timbre/latest-version.svg)](http://clojars.org/ring-logger-timbre)
 
