@@ -71,11 +71,9 @@
     (is (thrown-with-msg? Exception #"handler that throws"
                           (handler (mock/request :get "/doc/10"))))
     (let [entries @*entries*]
-      (is (= [:info :debug :error :error] (map second entries)))
+      (is (= [:info :debug :error] (map second entries)))
       (is (re-find #"Starting.*get /doc/10 for localhost"
                    (-> entries first (nth 3))))
-      (is (re-find #"Uncaught exception processing request.*for localhost in \(\d+ ms\)"
+      (is (re-find #"Uncaught exception .*I'm a handler that throws\!.*processing request.*for localhost in \(\d+ ms\)"
                    (-> entries (nth 2) (nth 3))))
-      (is (not (re-find #"Finished" (-> entries last (nth 3)))))
-      (is (re-find #"I'm a handler that throws\!"
-                   (-> entries (nth 3) (nth 3)))))))
+      (is (not (re-find #"Finished" (-> entries last (nth 3))))))))
