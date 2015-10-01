@@ -7,4 +7,5 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring-logger "0.7.4"]
                  [com.taoensso/timbre "4.1.1"]]
-  :profiles {:dev {:dependencies [[ring/ring-mock "0.2.0"]]}})
+  :profiles {:dev {:dependencies [[ring/ring-mock "0.2.0"]
+                                  [ring/ring-codec "1.0.0"]]}})

@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [taoensso.timbre :as timbre]
             [ring.logger.timbre :as logger.timbre]
+            [ring.util.codec :as codec]
             [ring.mock.request :as mock]))
 
 (def ^{:dynamic true} *entries* (atom []))
@@ -47,6 +48,20 @@
                    (-> entries (nth 2) (nth 3))))
       (is (re-find #"Finished.*get /doc/10 for localhost in \(\d+ ms\) Status:.*200"
                    (-> entries last (nth 3)))))))
+
+(deftest basic-ok-body-logging
+  (let [handler (-> (fn [req]
+                      {:status 200
+                       :body "ok"
+                       :headers {:a "header in the response"}})
+                    (logger.timbre/wrap-with-body-logger))
+        params {:foo :bar :zoo 123}]
+    (handler (-> (mock/request :post "/doc/10")
+                 (mock/body params)))
+    (let [entries @*entries*]
+      (is (= [:debug] (map second entries)))
+      (is (.endsWith (-> entries first (nth 3))
+                     (str "-- Raw request body: '" (codec/form-encode params) "'"))))))
 
 (deftest basic-error-request-logging
   (let [handler (-> (fn [req]

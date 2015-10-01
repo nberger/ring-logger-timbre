@@ -22,3 +22,9 @@
      handler
      (merge options {:logger (make-timbre-logger)})))
   ([handler] (wrap-with-logger handler {})))
+
+(defn wrap-with-body-logger
+  "Returns a Ring middleware handler which logs request body payloads using
+   taoensso/timbre as logger."
+  [handler]
+  (logger/wrap-with-body-logger handler (make-timbre-logger)))
