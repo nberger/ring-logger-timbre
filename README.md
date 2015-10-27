@@ -9,7 +9,7 @@
 In your `project.clj`, add the following dependencies:
 
 ```clojure
-    [ring-logger-timbre "0.7.4"]
+    [ring-logger-timbre "0.7.5"]
 ```
 
 Add the middleware to your stack, using the timbre implementation. It's similar to
