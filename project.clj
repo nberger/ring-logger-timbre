@@ -1,4 +1,4 @@
-(defproject ring-logger-timbre "0.7.5"
+(defproject ring-logger-timbre "0.7.6-SNAPSHOT"
   :description "taoensso/timbre implementation for ring-logger"
   :url "http://github.com/nberger/ring-logger-timbre"
   :license {:name "Eclipse Public License"
