@@ -21,11 +21,11 @@ using the default ring-logger, but requiring the timbre namespace:
                 [ring.logger.timbre :as logger.timbre]))
 
     (defn my-ring-app [request]
-         {:status 200
-          :headers {"Content-Type" "text/html"}
-          :body "Hello world!"})
+      {:status 200
+       :headers {"Content-Type" "text/html"}
+       :body "Hello world!"})
 
-    (jetty/run-jetty (logger.timbre/wrap-with-logger my-ring-app {:port 8080}))
+    (jetty/run-jetty (logger.timbre/wrap-with-logger my-ring-app) {:port 8080})
 ```
 
 ## Contributing
