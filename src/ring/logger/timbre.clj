@@ -7,7 +7,10 @@
   Logger
 
   (add-extra-middleware [_ handler] handler)
-  (log [_ level throwable message] (log/log level throwable message)))
+  (log [_ level throwable message]
+    (if throwable
+      (log/log level throwable message)
+      (log/log level message))))
 
 (defn make-timbre-logger []
   (TimbreLogger.))
