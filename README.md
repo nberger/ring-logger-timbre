@@ -34,7 +34,7 @@ Pull requests, issues and any feedback are all welcome!
 
 ## License
 
-Copyright © 2015 Nicolás Berger
+Copyright © 2017 Nicolás Berger
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
