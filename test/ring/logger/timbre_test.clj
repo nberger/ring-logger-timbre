@@ -1,6 +1,8 @@
 (ns ring.logger.timbre-test
   (:require [clojure.test :refer :all]
+            [clojure.string :as s]
             [taoensso.timbre :as timbre]
+            [clansi.core :as clansi]
             [ring.logger.timbre :as logger.timbre]
             [ring.util.codec :as codec]
             [ring.mock.request :as mock]))
@@ -88,3 +90,27 @@
         (is (re-find #"Uncaught exception .*I'm a handler that throws\!.*processing request.*for localhost in \(\d+ ms\)"
                      (-> @entries (nth 2) (nth 3))))
         (is (not (re-find #"Finished" (-> @entries last (nth 3)))))))))
+
+(deftest basic-ok-request-logging-with-default-appender
+  (timbre/with-level :trace
+    (clansi/without-ansi ;; avoid ansi colors for easier re-find
+      (let [entries (atom [])
+            handler (-> (fn [req]
+                          {:status 200
+                           :body "ok"
+                           :headers {:a "header in the response"}})
+                        (logger.timbre/wrap-with-logger))
+            out (with-out-str (handler (mock/request :get "/doc/10")))
+            lines (s/split-lines out)]
+        (is (not-any? #(re-find #"nil.*Starting" %) lines)
+            "There should not be a nil before the Starting message (PR #6 fixed that behavior)")
+        (is (= 4 (count lines)))
+        (is (= ["INFO" "DEBUG" "TRACE" "INFO"] (->> lines
+                                                    (map #(s/split % #" "))
+                                                    (map #(nth % 3)))))
+        (is (re-find #"Starting.*get /doc/10 for localhost"
+                     (first lines)))
+        (is (re-find #":headers \{:a \"header in the response\"\}"
+                     (nth lines 2)))
+        (is (re-find #"Finished.*get /doc/10 for localhost in \(\d+ ms\) Status:.*200"
+                     (last lines)))))))
